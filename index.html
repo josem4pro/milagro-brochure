@@ -25,7 +25,7 @@
     --t-nota:    clamp(1.0625rem, 0.95rem + 0.5vw, 1.1875rem);  /* 17 → 19 px */
     --t-titulo:  clamp(2rem, 1.4rem + 2.8vw, 2.75rem);          /* 32 → 44 px */
     --t-cita:    clamp(1.75rem, 1.2rem + 2.6vw, 2.5rem);         /* 28 → 40 px */
-    --t-precio:  clamp(5rem, 2rem + 16vw, 8rem);                 /* 80 → 128 px */
+    --t-precio:  clamp(3.5rem, 0.75rem + 15vw, 7rem);            /* 56 → 112 px, dos columnas */
     --t-curso:   clamp(2.5rem, 1.6rem + 4.5vw, 3.75rem);         /* 40 → 60 px */
 
     --ancho: 40rem;
@@ -146,8 +146,7 @@
   /* ---------- Precios ---------- */
   .precios h2 { font-size: var(--t-titulo); margin-bottom: 0.5rem; }
   .precios .modalidad { font-size: var(--t-nota); color: var(--gris-texto); margin-bottom: 2.75rem; }
-  .tarifas { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin: 0 0 3rem; padding: 0; list-style: none; }
-  @media (min-width: 34rem) { .tarifas { grid-template-columns: 1fr 1fr; gap: 2rem; } }
+  .tarifas { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.25rem, 5vw, 2.5rem); margin: 0 0 3rem; padding: 0; list-style: none; }
   .tarifa { border-top: 1px solid var(--filete); padding-top: 1.25rem; }
   .tarifa .tipo {
     font-family: var(--cuerpo);
