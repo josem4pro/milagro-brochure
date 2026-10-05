@@ -12,16 +12,16 @@
 <meta property="og:title" content="Estudio de Movimiento · Curso 2026 – 2027">
 <meta property="og:description" content="Pilates y Eutonía Aplicada con Milagro Ortiz. Las Caletillas, Candelaria, Tenerife. Precios, condiciones y contacto del Estudio.">
 <meta property="og:url" content="https://estudiodemovimiento.com/">
-<meta property="og:image" content="https://estudiodemovimiento.com/og.jpg">
-<meta property="og:image:secure_url" content="https://estudiodemovimiento.com/og.jpg">
+<meta property="og:image" content="https://estudiodemovimiento.com/og.jpg?v=estudio">
+<meta property="og:image:secure_url" content="https://estudiodemovimiento.com/og.jpg?v=estudio">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Retrato en blanco y negro de Milagro Ortiz junto al nombre del Estudio de Movimiento, Curso 2026 – 2027.">
+<meta property="og:image:alt" content="Emblema de Milagro Ortiz y una cama reformer del Estudio de Movimiento, Curso 2026 – 2027.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Estudio de Movimiento · Curso 2026 – 2027">
 <meta name="twitter:description" content="Pilates y Eutonía Aplicada con Milagro Ortiz. Las Caletillas, Candelaria, Tenerife.">
-<meta name="twitter:image" content="https://estudiodemovimiento.com/og.jpg">
+<meta name="twitter:image" content="https://estudiodemovimiento.com/og.jpg?v=estudio">
 <meta name="theme-color" content="#F5F1EA">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -103,6 +103,9 @@
   }
   .portada .retrato img { width: 100%; }
   .portada .marca { padding-top: clamp(2.5rem, 8vw, 4rem); }
+  /* Portada sin retrato: el emblema ocupa la primera pantalla, centrado. */
+  .portada.sin-retrato { min-height: 100svh; display: flex; align-items: center; justify-content: center; padding-top: 0; }
+  .portada.sin-retrato .marca { padding-top: 0; }
   .emblema { width: clamp(11rem, 44vw, 15rem); margin: 0 auto 1.75rem; }
   .estudio {
     font-family: var(--cuerpo);
@@ -241,10 +244,12 @@
 <body>
 
 <!-- ============ PORTADA ============ -->
-<section class="portada">
+<section class="portada sin-retrato">
+  <!-- Retrato quitado provisoriamente (5-oct-2026, pedido de Milagro). Para volver: descomentar y sacar la clase sin-retrato.
   <div class="retrato">
     <img src="img/retrato.jpg" width="1000" height="1500" alt="Milagro Ortiz, retrato en blanco y negro sobre fondo negro, con gafas, mirando de frente y con las manos cruzadas sobre el pecho." fetchpriority="high">
   </div>
+  -->
   <div class="marco marca">
     <img class="emblema" src="img/emblema.png" width="600" height="579" alt="Emblema de Milagro Ortiz: su firma dentro de un círculo violeta y gris.">
     <h1 class="estudio">Estudio de Movimiento<small>Pilates &amp; Eutonía Aplicada</small></h1>
