@@ -22,7 +22,7 @@
 <meta name="twitter:title" content="Estudio de Movimiento · Curso 2026 – 2027">
 <meta name="twitter:description" content="Pilates y Eutonía Aplicada con Milagro Ortiz. Las Caletillas, Candelaria, Tenerife.">
 <meta name="twitter:image" content="https://estudiodemovimiento.com/og.jpg?v=estudio">
-<meta name="theme-color" content="#F5F1EA">
+<meta name="theme-color" content="#101010">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@400;500&display=swap" rel="stylesheet">
@@ -104,9 +104,50 @@
   .portada .retrato img { width: 100%; }
   .portada .marca { padding-top: clamp(2.5rem, 8vw, 4rem); }
   /* Portada sin retrato: el emblema ocupa la primera pantalla, centrado. */
-  .portada.sin-retrato { min-height: 100svh; display: flex; align-items: center; justify-content: center; padding-top: 0; }
+  .portada.sin-retrato { min-height: 100svh; display: flex; align-items: center; justify-content: center; padding-top: clamp(2.5rem, 7vh, 4.5rem); padding-bottom: clamp(2.5rem, 7vh, 4.5rem); }
   .portada.sin-retrato .marca { padding-top: 0; }
+  /* Portada en negro con letra crema (20-nov-2026, idea de Jose): golpe de efecto con el emblema animado;
+     al bajar, el resto de la página sigue en crema con letra negra, como lo quiso Milagro. */
+  .portada.sin-retrato { background: var(--tinta); color: var(--crema); }
+  .portada.sin-retrato .estudio small, .portada.sin-retrato .lugar { color: #B8B1A9; }
+  .portada.sin-retrato .filete { background: rgba(245, 241, 234, .38); }
+  .portada.sin-retrato .sello svg { filter: drop-shadow(0 0 16px rgba(207, 183, 135, .22)); }
+  .portada.sin-retrato .sello::before { content: ""; position: absolute; inset: -12%; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle, rgba(201,182,228,.20), rgba(201,182,228,.06) 45%, transparent 68%); animation: halo 7s ease-in-out infinite; }
+  @keyframes halo { 0%, 100% { transform: scale(.92); opacity: .7; } 50% { transform: scale(1.08); opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .portada.sin-retrato .sello::before { animation: none; } }
+  .portada.sin-retrato .promo { box-shadow: none; outline: 1px solid rgba(201, 182, 228, .28); outline-offset: -1px; }
   .emblema { width: clamp(11rem, 44vw, 15rem); margin: 0 auto 1.75rem; }
+  /* Emblema animado, el mismo del curso de eutonía (20-nov-2026): los arcos se pintan, la firma se escribe,
+     late dos veces y se mece; cada diez segundos se desvanece y se vuelve a pintar. Un clic lo repite. */
+  .sello { display: block; position: relative; cursor: pointer; width: clamp(9.25rem, 37vw, 12.6rem); margin: 0 auto 2rem; }  /* 30 % más chico que la primera prueba (pedido de Jose, 20-nov-2026) */
+  .sello .disco { fill: var(--tinta); }  /* el emblema vive sobre un disco negro, como en la página del curso: así se ven sus colores y la punta de luz */
+  .sello svg { position: relative; display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 18px 30px rgba(96, 80, 104, .45)); transition: opacity .6s ease; }
+  .sello.borra svg { opacity: 0; }
+  .sello .pm { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .sello.pinta .pl { animation: pinta 1.9s cubic-bezier(.55,0,.2,1) .2s forwards; }
+  .sello.pinta .po { animation: pinta 1.9s cubic-bezier(.55,0,.2,1) .75s forwards; }
+  @keyframes pinta { to { stroke-dashoffset: 0; } }
+  .sello .fm { transform-box: fill-box; transform: translateX(-100%); }
+  .sello.pinta .fm { animation: escribe 1.5s cubic-bezier(.4,0,.3,1) 2.3s forwards; }
+  @keyframes escribe { to { transform: none; } }
+  .sello .punta circle { fill: #fff; opacity: 0; offset-rotate: 0deg; filter: url(#brillo); }
+  .sello .tl circle { offset-path: path("M277.2,29 A262,262 0 1 0 550.6,366.6"); }
+  .sello .to circle { offset-path: path("M52.3,204.7 A262,262 0 1 1 322.8,551"); }
+  .sello.pinta .tl circle { animation: punta 1.9s cubic-bezier(.55,0,.2,1) .2s forwards; }
+  .sello.pinta .tl circle:nth-child(2) { animation-delay: .26s; } .sello.pinta .tl circle:nth-child(3) { animation-delay: .32s; }
+  .sello.pinta .to circle { animation: punta 1.9s cubic-bezier(.55,0,.2,1) .75s forwards; }
+  .sello.pinta .to circle:nth-child(2) { animation-delay: .81s; } .sello.pinta .to circle:nth-child(3) { animation-delay: .87s; }
+  @keyframes punta { 0% { offset-distance: 0%; opacity: 0; } 8% { opacity: 1; } 86% { opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+  .sello .pulso { fill: none; stroke: #C9B6E4; stroke-width: 2; opacity: 0; transform-origin: 300px 290px; }
+  .sello.pinta .pulso { animation: pulso 1.7s ease-out 3.5s forwards; }
+  .sello.pinta .pulso.b { animation-delay: 3.85s; }
+  @keyframes pulso { 0% { transform: scale(.97); opacity: .75; } 100% { transform: scale(1.24); opacity: 0; } }
+  .sello .giro { transform-origin: 300px 290px; }
+  .sello.pinta .gl { animation: vaiven 11s ease-in-out 4.8s infinite; }
+  .sello.pinta .go { animation: vaiven 11s ease-in-out 4.8s infinite reverse; }
+  @keyframes vaiven { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-2.4deg); } 75% { transform: rotate(2.4deg); } }
+  @media (prefers-reduced-motion: reduce) { .sello .pm { stroke-dashoffset: 0 !important; } .sello .fm { transform: none !important; } .sello * { animation: none !important; } .sello svg { transition: none; } }
   .estudio {
     font-family: var(--cuerpo);
     font-size: clamp(1.125rem, 0.85rem + 1.4vw, 1.5rem);
@@ -138,6 +179,7 @@
   @keyframes promo-late { 0%, 100% { box-shadow: 0 0 0 0 rgba(201, 182, 228, 0.7); } 50% { box-shadow: 0 0 0 0.55rem rgba(201, 182, 228, 0); } }
   .promo-titulo { font-family: var(--display); font-weight: 400; font-size: clamp(1.5rem, 1.1rem + 2vw, 2rem); line-height: 1.1; }
   .promo-titulo em { color: #C9B6E4; }
+  .promo-ir .nw { white-space: nowrap; }
   .promo-ir { font-family: var(--cuerpo); font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.78; }
   @media (prefers-reduced-motion: reduce) { .promo-aviso i { animation: none; } .promo { transition: none; } }
   .lugar {
@@ -267,7 +309,26 @@
   </div>
   -->
   <div class="marco marca">
-    <img class="emblema" src="img/emblema.png" width="600" height="579" alt="Emblema de Milagro Ortiz: su firma dentro de un círculo violeta y gris.">
+    <span class="emblema sello" id="sello" title="Milagro Ortiz">
+      <svg viewBox="-60 -60 720 699" role="img" aria-label="Emblema de Milagro Ortiz: su firma dentro de un círculo lila y dorado.">
+        <defs>
+          <filter id="brillo" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <mask id="mLila" maskUnits="userSpaceOnUse" x="-60" y="-60" width="720" height="699"><path class="pm pl" d="M277.2,29 A262,262 0 1 0 550.6,366.6" pathLength="1" fill="none" stroke="#fff" stroke-width="190"/></mask>
+          <mask id="mOro" maskUnits="userSpaceOnUse" x="-60" y="-60" width="720" height="699"><path class="pm po" d="M52.3,204.7 A262,262 0 1 1 322.8,551" pathLength="1" fill="none" stroke="#fff" stroke-width="190"/></mask>
+          <linearGradient id="gFirma" x1="0" x2="1"><stop offset="0" stop-color="#fff"/><stop offset=".8" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          <mask id="mFirma" maskUnits="userSpaceOnUse" x="0" y="225" width="600" height="130"><rect class="fm" x="30" y="228" width="660" height="124" fill="url(#gFirma)"/></mask>
+        </defs>
+        <circle class="disco" cx="300" cy="290" r="332"/>
+        <g transform="translate(300 290) scale(.86) translate(-300 -290)">
+        <circle class="pulso" cx="300" cy="290" r="262"/><circle class="pulso b" cx="300" cy="290" r="262"/>
+        <g class="giro gl"><image href="img/arco-lila.png" width="600" height="579" mask="url(#mLila)"/></g>
+        <g class="giro go"><image href="img/arco-oro.png" width="600" height="579" mask="url(#mOro)"/></g>
+        <image href="img/firma-oro.png" x="48" y="248.4" width="504" height="82.3" mask="url(#mFirma)"/>
+        <g class="punta tl"><circle r="8"/><circle r="5"/><circle r="3"/></g>
+        <g class="punta to"><circle r="8"/><circle r="5"/><circle r="3"/></g>
+        </g>
+      </svg>
+    </span>
     <h1 class="estudio">Estudio de Movimiento<small>Pilates &amp; Eutonía Aplicada</small></h1>
     <hr class="filete">
     <p class="curso">Curso 2026 — 2027</p>
@@ -275,7 +336,7 @@
     <div class="promo">
       <span class="promo-aviso"><i></i>Próximamente</span>
       <span class="promo-titulo">Curso presencial de <em>Eutonía aplicada</em></span>
-      <span class="promo-ir">Ocho semanas</span>
+      <span class="promo-ir"><span class="nw">Ocho semanas ·</span> <span class="nw">Cupo limitado a 8 personas</span></span>
     </div>
   </div>
 </section>
@@ -381,5 +442,25 @@
   </div>
 </section>
 
+<script>
+/* El emblema se pinta solo y se repite cada diez segundos mientras está a la vista; un clic lo vuelve a pintar. */
+(() => {
+  const sello = document.getElementById('sello'); if (!sello) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { sello.classList.add('pinta'); return; }
+  let visible = true, ciclo = null;
+  new IntersectionObserver(e => visible = e[0].isIntersecting).observe(sello);
+  function pintar() {
+    sello.classList.remove('pinta', 'borra'); void sello.getBoundingClientRect(); sello.classList.add('pinta');
+    clearTimeout(ciclo);
+    const otraVez = () => { ciclo = setTimeout(() => {
+      if (document.hidden || !visible) return otraVez();
+      sello.classList.add('borra'); ciclo = setTimeout(pintar, 700);
+    }, 10000); };
+    otraVez();
+  }
+  setTimeout(pintar, 600);
+  sello.addEventListener('click', pintar);
+})();
+</script>
 </body>
 </html>
