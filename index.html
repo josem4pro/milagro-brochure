@@ -116,11 +116,19 @@
     background: radial-gradient(circle, rgba(201,182,228,.20), rgba(201,182,228,.06) 45%, transparent 68%); animation: halo 7s ease-in-out infinite; }
   @keyframes halo { 0%, 100% { transform: scale(.92); opacity: .7; } 50% { transform: scale(1.08); opacity: 1; } }
   @media (prefers-reduced-motion: reduce) { .portada.sin-retrato .sello::before { animation: none; } }
-  .portada.sin-retrato .promo { box-shadow: none; outline: 1px solid rgba(201, 182, 228, .28); outline-offset: -1px; }
+  .portada.sin-retrato .promo { box-shadow: none; position: relative; background: var(--crema); color: var(--tinta); }  /* invertido: crema con letra oscura sobre la portada negra */
+  .portada.sin-retrato .promo-aviso { color: var(--violeta); }
+  .portada.sin-retrato .promo-aviso i { background: var(--violeta); }
+  .portada.sin-retrato .promo-titulo em { color: var(--violeta); }
+  /* El borde del cuadro (3 px, lila) lo dibuja una punta de luz que da la vuelta, al mismo ritmo que el emblema (20-nov-2026) */
+  .promo-borde { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; transition: opacity .6s ease; }
+  .promo.borra .promo-borde { opacity: 0; }
+  .promo-borde .pb-linea { fill: none; stroke: #CFB787; stroke-width: 3; }  /* champán, como el arco dorado del emblema */
+  .promo-borde .pb-punta circle { fill: #fff; filter: url(#brillo); opacity: 0; }
   .emblema { width: clamp(11rem, 44vw, 15rem); margin: 0 auto 1.75rem; }
   /* Emblema animado, el mismo del curso de eutonía (20-nov-2026): los arcos se pintan, la firma se escribe,
      late dos veces y se mece; cada diez segundos se desvanece y se vuelve a pintar. Un clic lo repite. */
-  .sello { display: block; position: relative; cursor: pointer; width: clamp(12rem, 48vw, 16.4rem); margin: 0 auto 2rem; }  /* 30 % más grande que la primera versión publicada, en el teléfono y en la compu (pedido de Jose, 20-nov-2026) */
+  .sello { display: block; position: relative; cursor: pointer; width: clamp(12rem, 48vw, 12.6rem); margin: 0 auto 2rem; }  /* en el teléfono, 30 % más grande que la primera versión; en la compu vuelve al tamaño anterior para que el cuadro entre en pantalla (20-nov-2026) */
   .sello .disco { fill: var(--tinta); }  /* el emblema vive sobre un disco negro, como en la página del curso: así se ven sus colores y la punta de luz */
   .sello svg { position: relative; display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 18px 30px rgba(96, 80, 104, .45)); transition: opacity .6s ease; }
   .sello.borra svg { opacity: 0; }
@@ -334,6 +342,7 @@
     <p class="curso">Curso 2026 — 2027</p>
     <p class="lugar">Las Caletillas · Candelaria · Tenerife</p>
     <div class="promo">
+      <svg class="promo-borde" aria-hidden="true"><path class="pb-linea"/><g class="pb-punta"><circle r="4.5"/><circle r="3"/><circle r="1.8"/></g></svg>
       <span class="promo-aviso"><i></i>Próximamente</span>
       <span class="promo-titulo">Curso presencial de <em>Eutonía aplicada</em></span>
       <span class="promo-ir"><span class="nw">Ocho semanas ·</span> <span class="nw">Cupo limitado a 8 personas</span></span>
@@ -443,21 +452,53 @@
 </section>
 
 <script>
-/* El emblema se pinta solo y se repite cada diez segundos mientras está a la vista; un clic lo vuelve a pintar. */
+/* El emblema se pinta solo y se repite cada diez segundos mientras está a la vista; un clic lo vuelve a pintar.
+   En cada vuelta, una punta de luz dibuja también el borde del cuadro del curso. */
 (() => {
   const sello = document.getElementById('sello'); if (!sello) return;
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { sello.classList.add('pinta'); return; }
+  const caja = document.querySelector('.portada .promo'), borde = caja && caja.querySelector('.promo-borde');
+  const linea = borde && borde.querySelector('.pb-linea'), puntos = borde ? [...borde.querySelectorAll('.pb-punta circle')] : [];
+  let largo = 0, anim = 0;
+  function medir() {
+    if (!borde) return;
+    const w = caja.offsetWidth, h = caja.offsetHeight, m = 1.5;
+    borde.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    linea.setAttribute('d', `M${w / 2},${m} H${w - m} V${h - m} H${m} V${m} Z`);
+    largo = linea.getTotalLength();
+  }
+  medir(); if (borde && 'ResizeObserver' in window) new ResizeObserver(medir).observe(caja);
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (quieto) { sello.classList.add('pinta'); return; }
+  function dibujarCaja() {
+    if (!borde) return;
+    cancelAnimationFrame(anim); caja.classList.remove('borra');
+    linea.style.strokeDasharray = `0 ${largo + 1}`;
+    const inicio = performance.now() + 900, dura = 2600, cola = [0, .014, .028];
+    const paso = ahora => {
+      const t = Math.min(1, Math.max(0, (ahora - inicio) / dura)), e = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      linea.style.strokeDasharray = `${largo * e} ${largo + 1}`;
+      puntos.forEach((c, i) => {
+        const pt = linea.getPointAtLength(Math.max(0, e - cola[i]) * largo);
+        c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y);
+        c.style.opacity = t > 0 && t < 1 ? (1 - i * .25) : 0;
+      });
+      if (t < 1) anim = requestAnimationFrame(paso); else linea.style.strokeDasharray = 'none';
+    };
+    anim = requestAnimationFrame(paso);
+  }
   let visible = true, ciclo = null;
   new IntersectionObserver(e => visible = e[0].isIntersecting).observe(sello);
   function pintar() {
     sello.classList.remove('pinta', 'borra'); void sello.getBoundingClientRect(); sello.classList.add('pinta');
+    dibujarCaja();
     clearTimeout(ciclo);
     const otraVez = () => { ciclo = setTimeout(() => {
       if (document.hidden || !visible) return otraVez();
-      sello.classList.add('borra'); ciclo = setTimeout(pintar, 700);
+      sello.classList.add('borra'); caja && caja.classList.add('borra'); ciclo = setTimeout(pintar, 700);
     }, 10000); };
     otraVez();
   }
+  if (borde) linea.style.strokeDasharray = `0 ${largo + 1}`;
   setTimeout(pintar, 600);
   sello.addEventListener('click', pintar);
 })();
