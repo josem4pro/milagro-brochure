@@ -25,7 +25,7 @@
 <meta name="theme-color" content="#101010">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@400;500&display=swap" rel="stylesheet">
 <style>
   /* ---- Sistema de marca (cerrado) ---- */
   :root {
@@ -104,7 +104,7 @@
   .portada .retrato img { width: 100%; }
   .portada .marca { padding-top: clamp(2.5rem, 8vw, 4rem); }
   /* Portada sin retrato: el emblema ocupa la primera pantalla, centrado. */
-  .portada.sin-retrato { min-height: 100svh; display: flex; align-items: center; justify-content: center; padding-top: clamp(2.5rem, 7vh, 4.5rem); padding-bottom: clamp(2.5rem, 7vh, 4.5rem); }
+  .portada.sin-retrato { min-height: 100svh; display: flex; align-items: center; justify-content: center; padding-top: clamp(2.5rem, 7vh, 4.5rem); padding-bottom: clamp(4rem, 10vh, 5.5rem); }  /* más aire bajo el cuadro antes de que empiece el crema */
   .portada.sin-retrato .marca { padding-top: 0; }
   /* Portada en negro con letra crema (20-nov-2026, idea de Jose): golpe de efecto con el emblema animado;
      al bajar, el resto de la página sigue en crema con letra negra, como lo quiso Milagro. */
@@ -120,6 +120,7 @@
   .portada.sin-retrato .promo-aviso { color: var(--violeta); }
   .portada.sin-retrato .promo-aviso i { background: var(--violeta); }
   .portada.sin-retrato .promo-titulo em { color: var(--violeta); }
+  .portada.sin-retrato .promo-titulo { font-weight: 600; font-size: clamp(1.65rem, 1.2rem + 2vw, 2rem); }  /* en negrita y un punto más grande: en el teléfono se perdía */
   /* El borde del cuadro (3 px, lila) lo dibuja una punta de luz que da la vuelta, al mismo ritmo que el emblema (20-nov-2026) */
   .promo-borde { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; transition: opacity .6s ease; }
   .promo.borra .promo-borde { opacity: 0; }
