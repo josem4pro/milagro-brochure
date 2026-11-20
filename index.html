@@ -124,7 +124,7 @@
   }
   .portada .filete { margin: 2.5rem auto; width: 3.5rem; }
   .curso { font-family: var(--display); font-weight: 300; font-size: var(--t-curso); line-height: 1; margin: 0 0 1.25rem; }
-  /* Botón de promoción del curso de eutonía (18-nov-2026) */
+  /* Aviso «Próximamente» del curso de eutonía (18-nov-2026; sin enlace desde el 20-nov-2026, a pedido de Milagro) */
   .promo {
     display: inline-flex; flex-direction: column; align-items: center; gap: 0.45rem;
     margin-top: 2.75rem; padding: 1.15rem 2.1rem 1.25rem;
@@ -132,7 +132,7 @@
     box-shadow: 0 22px 44px -22px rgba(96, 80, 104, 0.85);
     transition: transform 0.35s ease, box-shadow 0.35s ease;
   }
-  .promo:hover, .promo:focus-visible { transform: translateY(-3px); box-shadow: 0 28px 50px -20px rgba(96, 80, 104, 0.95); }
+  a.promo:hover, a.promo:focus-visible { transform: translateY(-3px); box-shadow: 0 28px 50px -20px rgba(96, 80, 104, 0.95); }
   .promo-aviso { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--cuerpo); font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: #C9B6E4; }
   .promo-aviso i { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: #C9B6E4; animation: promo-late 2.2s ease-in-out infinite; }
   @keyframes promo-late { 0%, 100% { box-shadow: 0 0 0 0 rgba(201, 182, 228, 0.7); } 50% { box-shadow: 0 0 0 0.55rem rgba(201, 182, 228, 0); } }
@@ -272,11 +272,11 @@
     <hr class="filete">
     <p class="curso">Curso 2026 — 2027</p>
     <p class="lugar">Las Caletillas · Candelaria · Tenerife</p>
-    <a class="promo" href="curso-eutonia-aplicada/">
+    <div class="promo">
       <span class="promo-aviso"><i></i>Próximamente</span>
       <span class="promo-titulo">Curso presencial de <em>Eutonía aplicada</em></span>
-      <span class="promo-ir">Ocho semanas · ver el curso →</span>
-    </a>
+      <span class="promo-ir">Ocho semanas</span>
+    </div>
   </div>
 </section>
 
